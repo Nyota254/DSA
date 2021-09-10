@@ -96,3 +96,52 @@ for oneTest in tests:
     print('------Test-case-pass-status----------')
     # print(locate_card(**oneTest['input']) == oneTest['output'])
     evaluate_test_case(locate_card, oneTest)
+
+
+##################################
+# [7,8,1,3,4,5,6] [7,8,9,10,11,12,3,4,5]
+##################################
+# PSEUDO CODE
+# 1. initialize highest and lowest point of the array
+# 2. check if the middle number is less than the number to its right
+# 3. if the number to its right is less return the array index point plus one as number of rotations
+# 4. else if the element to its right is greater compare the middle element with the last element
+# 5. if last element is smaller then the middle element  then let the lowest number be mid index + 1
+# 6. else let  hi number be index-1
+# 7. repeat step 2 to 6 else return 0
+##################################
+def count_rotations_binary(nums):
+    '''
+    count how many arrays have been rotated
+    '''
+    lo = 0
+    hi = len(nums)-1
+
+    while 0 < len(nums)-1:
+        '''
+        '''
+
+        mid = (hi-lo)//2
+        # print((hi-lo)//2, nums[mid])
+        if nums[mid] < nums[mid+1]:
+            return mid
+        elif nums[mid] < nums[hi]:
+            lo = mid + 1
+        elif nums[mid] > nums[hi]:
+            hi = mid-1
+
+    return 0
+
+
+#################
+# Test Case if true pass
+#################
+test = {
+    'input': {
+        'nums': [28, 27, 26, 25, 3, 4, 5, 6, 7, 8],
+    },
+    'output': 4
+}
+
+
+print(count_rotations_binary(test['input']['nums']) == test['output'])
