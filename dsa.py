@@ -1,14 +1,14 @@
+#################################################################################################
+# SECTION 1 BINARY SEARCH,LINKED LISTS AND COMPLEXITY
+################################################################################################
+
+
 # 1. find the position of provided input in array
-
-#############################################
-# linear search
-#############################################
-
 
 # sol 1
 # brute-force linear search
 
-from jovian.pythondsa import evaluate_test_case
+# from jovian.pythondsa import evaluate_test_case
 
 '''
 Bute force
@@ -38,6 +38,7 @@ def locate_card(cards, query):
         mid = (lo + hi) // 2
         mid_number = cards[mid]
 
+        # visualization
         print("lo:", lo, ", hi:", hi, ", mid:",
               mid, ", mid_number:", mid_number)
 
@@ -94,8 +95,8 @@ tests.append({
 # function test as follows
 for oneTest in tests:
     print('------Test-case-pass-status----------')
-    # print(locate_card(**oneTest['input']) == oneTest['output'])
-    evaluate_test_case(locate_card, oneTest)
+    print(locate_card(**oneTest['input']) == oneTest['output'])
+    # evaluate_test_case(locate_card, oneTest)
 
 
 ##################################
@@ -143,5 +144,85 @@ test = {
     'output': 4
 }
 
-
+# newArray = test['input']['nums']
+# newArray1 = newArray[1:4]
+# print(newArray1)
 print(count_rotations_binary(test['input']['nums']) == test['output'])
+
+
+########################################################################################################
+# SECTION 2 BINARY SEARCH TREES,TRAVERSALS AND BALANCING
+#########################################################################################################
+'''
+Problem
+QUESTION 1: As a senior backend engineer at Jovian, you are tasked with developing a fast in-memory data structure to manage profile information (username, name and email) for 100 million users. It should allow the following operations to be performed efficiently:
+
+1. Insert the profile information for a new user.
+2. Find the profile information of a user, given their username
+3. Update the profile information of a user, given their usrname
+4. List all the users of the platform, sorted by username
+You can assume that usernames are unique.
+'''
+
+
+class User:
+    def __init__(self, username, name, email):
+        self.username = username
+        self.name = name
+        self.email = email
+
+    def __repr__(self):
+        return "User(name='{}', username='{}' ,email='{}')".format(self.name, self.username, self.email)
+
+    def __str__(self):
+        return self.__repr__()
+
+
+class UserDatabase:
+    def __init__(self):
+        self.users = []
+
+    def insert(self, user):
+        i = 0
+        while i < len(self.users):
+            if self.users[i].username > user.username:
+                break
+            i += 1
+        self.users.insert(i, user)
+
+    def find(self, username):
+        for user in self.users:
+            if user.username == username:
+                return user
+
+    def update(self, user):
+        target = self.find(user.username)
+        target.name, target.email = user.name, user.email
+
+    def list_all(self):
+        return self.users
+
+
+aakash = User('aakash', 'Aakash Rai', 'aakash@example.com')
+biraj = User('biraj', 'Biraj Das', 'biraj@example.com')
+hemanth = User('hemanth', 'Hemanth Jain', 'hemanth@example.com')
+jadhesh = User('jadhesh', 'Jadhesh Verma', 'jadhesh@example.com')
+siddhant = User('siddhant', 'Siddhant Sinha', 'siddhant@example.com')
+sonaksh = User('sonaksh', 'Sonaksh Kumar', 'sonaksh@example.com')
+vishal = User('vishal', 'Vishal Goel', 'vishal@example.com')
+
+database = UserDatabase()
+
+database.insert(aakash)
+database.insert(vishal)
+database.insert(biraj)
+
+user = database.find('biraj')
+print(user)
+print(database.list_all())
+
+#################################
+# THE ABOVE CODE TIMECOMPLEXITY ANALYSIS
+# worst case scenario it will take n iterations as it is a bruteforce method thus O(n) in complexity
+# for insert find and update need optimization with logarithmic time sublinear O(log n) algo.
+# the list has a complexity of constant time O(1).
